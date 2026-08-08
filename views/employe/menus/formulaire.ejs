@@ -5,7 +5,7 @@
 </head>
 <body>
   <%- include("../../partials/header") %>
-  <main>
+  <main id="contenu-principal">
     <h1><%= menu && menu.menu_id ? "Modifier le menu" : "Nouveau menu" %></h1>
     <%- include("../../partials/messages", { erreurs: erreurs }) %>
 
@@ -61,7 +61,7 @@
       <div class="galerie">
         <% (images || []).forEach(function(img) { %>
           <div class="galerie-item">
-            <img src="<%= img.chemin %>" alt="">
+            <img src="<%= img.chemin %>" alt="Photo du menu <%= menu.titre %>">
             <form method="POST" action="/employe/menus/<%= menu.menu_id %>/images/<%= img.image_id %>/supprimer" onsubmit="return confirm('Supprimer cette image ?');">
               <button type="submit">Supprimer</button>
             </form>

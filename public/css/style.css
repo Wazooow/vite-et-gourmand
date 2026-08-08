@@ -2,6 +2,26 @@
   box-sizing: border-box;
 }
 
+.lien-evitement {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #fff;
+  color: #6b3fa0;
+  padding: 0.75rem 1rem;
+  z-index: 100;
+  border-radius: 0 0 4px 0;
+}
+
+.lien-evitement:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid #6b3fa0;
+  outline-offset: 2px;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
@@ -58,6 +78,13 @@ main {
   margin-right: 1rem;
 }
 
+.liste-horaires {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -94,6 +121,15 @@ main {
 .hint {
   font-size: 0.85rem;
   color: #666;
+}
+
+.bouton-danger {
+  padding: 0.6rem 1.2rem;
+  background: #a12f2f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .message {

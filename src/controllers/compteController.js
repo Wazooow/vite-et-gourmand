@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const pool = require("../config/mysql");
 
 async function afficherMonCompte(req, res) {
@@ -41,4 +42,25 @@ async function modifierInformations(req, res) {
   res.redirect("/mon-compte/informations");
 }
 
-module.exports = { afficherMonCompte, afficherInformations, modifierInformations };
+async function supprimerCompte(req, res) {
+  const utilisateurId = req.session.user.id;
+
+  // Droit à l'effacement (RGPD) : on anonymise plutôt que de supprimer la
+  // ligne physiquement, car les commandes passées doivent être conservées
+  // pour la comptabilité (référence via une clé étrangère).
+  const identifiantAnonyme = `compte-supprime-${utilisateurId}-${crypto.randomBytes(4).toString("hex")}@anonymise.local`;
+  await pool.query(
+    `UPDATE utilisateur SET
+       nom = 'Compte supprimé', prenom = '', email = ?, telephone = NULL,
+       ville = NULL, pays = NULL, adresse_postale = NULL,
+       password = ?, actif = FALSE
+     WHERE utilisateur_id = ?`,
+    [identifiantAnonyme, crypto.randomBytes(32).toString("hex"), utilisateurId]
+  );
+
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
+}
+
+module.exports = { afficherMonCompte, afficherInformations, modifierInformations, supprimerCompte };

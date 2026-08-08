@@ -7,5 +7,6 @@ router.get("/contact", pageController.afficherContact);
 router.post("/contact", pageController.envoyerContact);
 router.get("/mentions-legales", pageController.mentionsLegales);
 router.get("/cgv", pageController.cgv);
+router.get("/politique-confidentialite", pageController.politiqueConfidentialite);
 
 module.exports = router;

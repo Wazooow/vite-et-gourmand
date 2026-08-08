@@ -12,6 +12,7 @@ const commandeRoutes = require("./src/routes/commandeRoutes");
 const compteRoutes = require("./src/routes/compteRoutes");
 const employeRoutes = require("./src/routes/employeRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
+const pool = require("./src/config/mysql");
 
 const app = express();
 
@@ -34,6 +35,18 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   res.locals.flash = req.session.flash || null;
   delete req.session.flash;
+  next();
+});
+
+app.use(async (req, res, next) => {
+  try {
+    const [horaires] = await pool.query(
+      "SELECT jour, heure_ouverture, heure_fermeture FROM horaire ORDER BY FIELD(jour, 'lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche')"
+    );
+    res.locals.horaires = horaires;
+  } catch (err) {
+    res.locals.horaires = [];
+  }
   next();
 });
 

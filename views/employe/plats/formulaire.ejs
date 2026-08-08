@@ -5,7 +5,7 @@
 </head>
 <body>
   <%- include("../../partials/header") %>
-  <main>
+  <main id="contenu-principal">
     <h1><%= plat && plat.plat_id ? "Modifier le plat" : "Nouveau plat" %></h1>
     <%- include("../../partials/messages", { erreurs: erreurs }) %>
 

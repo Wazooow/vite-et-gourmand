@@ -5,7 +5,7 @@
 </head>
 <body>
   <%- include("../partials/header") %>
-  <main>
+  <main id="contenu-principal">
     <h1>Créer un compte</h1>
     <%- include("../partials/messages", { erreurs: erreurs }) %>
 
@@ -38,6 +38,12 @@
         <input type="password" name="password_confirmation" required minlength="10">
       </label>
       <p class="hint">10 caractères minimum, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+
+      <label class="case-a-cocher">
+        <input type="checkbox" name="consentement" required>
+        J'accepte que mes données soient utilisées pour la gestion de mon compte et de mes commandes, conformément à la <a href="/politique-confidentialite">politique de confidentialité</a>.
+      </label>
+
       <button type="submit">Créer mon compte</button>
     </form>
     <p><a href="/auth/connexion">J'ai déjà un compte</a></p>
