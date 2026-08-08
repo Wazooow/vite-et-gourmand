@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Espace employé" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main>
+    <h1>Espace employé</h1>
+    <ul class="menu-espace">
+      <li><a href="/employe/commandes">Gérer les commandes</a></li>
+      <li><a href="/employe/menus">Gérer les menus</a></li>
+      <li><a href="/employe/plats">Gérer les plats</a></li>
+      <li><a href="/employe/horaires">Gérer les horaires</a></li>
+      <li><a href="/employe/avis">Modérer les avis</a></li>
+    </ul>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

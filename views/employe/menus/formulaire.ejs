@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: menu ? "Modifier le menu" : "Nouveau menu" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main>
+    <h1><%= menu && menu.menu_id ? "Modifier le menu" : "Nouveau menu" %></h1>
+    <%- include("../../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="<%= menu && menu.menu_id ? '/employe/menus/' + menu.menu_id + '/modifier' : '/employe/menus' %>" class="form form-large">
+      <label>Titre
+        <input type="text" name="titre" value="<%= (menu && menu.titre) || '' %>" required>
+      </label>
+      <label>Description
+        <textarea name="description" rows="3"><%= (menu && menu.description) || '' %></textarea>
+      </label>
+      <label>Conditions
+        <textarea name="conditions" rows="3"><%= (menu && menu.conditions) || '' %></textarea>
+      </label>
+      <label>Nombre de personnes minimum
+        <input type="number" name="nombre_personne_minimum" min="1" value="<%= (menu && menu.nombre_personne_minimum) || '' %>" required>
+      </label>
+      <label>Prix par personne (€)
+        <input type="number" name="prix_par_personne" min="0" step="0.01" value="<%= (menu && menu.prix_par_personne) || '' %>" required>
+      </label>
+      <label>Stock (nombre de commandes possibles)
+        <input type="number" name="quantite_restante" min="0" value="<%= menu && typeof menu.quantite_restante !== 'undefined' ? menu.quantite_restante : 0 %>" required>
+      </label>
+      <label>Thème
+        <select name="theme_id" required>
+          <% themes.forEach(function(t) { %>
+            <option value="<%= t.theme_id %>" <%= menu && Number(menu.theme_id) === t.theme_id ? "selected" : "" %>><%= t.libelle %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Régime
+        <select name="regime_id" required>
+          <% regimes.forEach(function(r) { %>
+            <option value="<%= r.regime_id %>" <%= menu && Number(menu.regime_id) === r.regime_id ? "selected" : "" %>><%= r.libelle %></option>
+          <% }) %>
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>Plats du menu</legend>
+        <% plats.forEach(function(p) { %>
+          <label class="case-a-cocher">
+            <input type="checkbox" name="plats" value="<%= p.plat_id %>" <%= platsSelectionnes.includes(p.plat_id) ? "checked" : "" %>>
+            <%= p.titre_plat %> (<%= p.type_plat %>)
+          </label>
+        <% }) %>
+      </fieldset>
+
+      <button type="submit">Enregistrer</button>
+    </form>
+
+    <% if (menu && menu.menu_id) { %>
+      <h2>Galerie d'images</h2>
+      <div class="galerie">
+        <% (images || []).forEach(function(img) { %>
+          <div class="galerie-item">
+            <img src="<%= img.chemin %>" alt="">
+            <form method="POST" action="/employe/menus/<%= menu.menu_id %>/images/<%= img.image_id %>/supprimer" onsubmit="return confirm('Supprimer cette image ?');">
+              <button type="submit">Supprimer</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+      <form method="POST" action="/employe/menus/<%= menu.menu_id %>/images" enctype="multipart/form-data" class="form">
+        <label>Ajouter des images
+          <input type="file" name="images" accept="image/*" multiple>
+        </label>
+        <button type="submit">Envoyer</button>
+      </form>
+    <% } %>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>

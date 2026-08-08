@@ -10,6 +10,7 @@ const menuRoutes = require("./src/routes/menuRoutes");
 const apiRoutes = require("./src/routes/apiRoutes");
 const commandeRoutes = require("./src/routes/commandeRoutes");
 const compteRoutes = require("./src/routes/compteRoutes");
+const employeRoutes = require("./src/routes/employeRoutes");
 const { requireRole } = require("./src/middlewares/auth");
 
 const app = express();
@@ -42,11 +43,9 @@ app.use("/menus", menuRoutes);
 app.use("/api", apiRoutes);
 app.use("/commandes", commandeRoutes);
 app.use("/mon-compte", compteRoutes);
+app.use("/employe", employeRoutes);
 
-// Espaces protégés — pages détaillées à venir (tâches #9, #10)
-app.get("/employe", requireRole("employe"), (req, res) => {
-  res.render("erreur", { title: "Espace employé", message: "Espace employé à venir." });
-});
+// Espace admin — à venir (tâche #10)
 app.get("/admin", requireRole("administrateur"), (req, res) => {
   res.render("erreur", { title: "Espace administrateur", message: "Espace administrateur à venir." });
 });

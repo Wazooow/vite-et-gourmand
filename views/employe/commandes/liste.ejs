@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Commandes" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main>
+    <h1>Commandes</h1>
+    <%- include("../../partials/messages", {}) %>
+
+    <form method="GET" action="/employe/commandes" class="filtres">
+      <label>Statut
+        <select name="statut">
+          <option value="">Tous</option>
+          <% ["en_attente","accepte","en_preparation","en_cours_de_livraison","livre","en_attente_retour_materiel","terminee","annulee"].forEach(function(s) { %>
+            <option value="<%= s %>" <%= filtres.statut === s ? "selected" : "" %>><%= s %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Client (nom, prénom ou email)
+        <input type="text" name="client" value="<%= filtres.client || '' %>">
+      </label>
+      <button type="submit">Filtrer</button>
+    </form>
+
+    <table class="tableau">
+      <thead><tr><th>Numéro</th><th>Client</th><th>Menu</th><th>Date prestation</th><th>Statut</th><th></th></tr></thead>
+      <tbody>
+        <% commandes.forEach(function(c) { %>
+          <tr>
+            <td><%= c.numero_commande %></td>
+            <td><%= c.prenom %> <%= c.nom %> (<%= c.email %>)</td>
+            <td><%= c.menu_titre %></td>
+            <td><%= new Date(c.date_prestation).toLocaleDateString("fr-FR") %></td>
+            <td><%= c.statut %></td>
+            <td><a href="/employe/commandes/<%= c.commande_id %>">Voir</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>
