@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Commander : " + menu.titre }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main>
+    <h1>Commander « <%= menu.titre %> »</h1>
+    <p><%= menu.nombre_personne_minimum %> personnes minimum — <%= Number(menu.prix_par_personne).toFixed(2) %> €/pers.</p>
+
+    <%- include("../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="/commandes" class="form" id="form-commande">
+      <input type="hidden" name="menu_id" value="<%= menu.menu_id %>">
+
+      <label>Adresse de livraison
+        <input type="text" name="adresse_livraison" value="<%= valeurs.adresse_livraison || profil.adresse_postale || '' %>" required>
+      </label>
+      <label>Ville
+        <input type="text" name="ville_livraison" id="ville_livraison" value="<%= valeurs.ville_livraison || profil.ville || '' %>" required>
+      </label>
+      <label>Code postal
+        <input type="text" name="code_postal_livraison" value="<%= valeurs.code_postal_livraison || '' %>" required>
+      </label>
+      <label>Distance depuis Bordeaux (km, si hors Bordeaux)
+        <input type="number" name="distance_km" id="distance_km" min="0" step="0.1" value="<%= valeurs.distance_km || 0 %>">
+      </label>
+      <label>Date de la prestation
+        <input type="date" name="date_prestation" value="<%= valeurs.date_prestation || '' %>" required>
+      </label>
+      <label>Heure de livraison souhaitée
+        <input type="time" name="heure_livraison" value="<%= valeurs.heure_livraison || '' %>" required>
+      </label>
+      <label>Nombre de personnes
+        <input type="number" name="nombre_personne" id="nombre_personne" min="<%= menu.nombre_personne_minimum %>" value="<%= valeurs.nombre_personne || menu.nombre_personne_minimum %>" required>
+      </label>
+
+      <div class="recap-prix" id="recap-prix">
+        <p>Prix du menu : <strong id="recap-prix-menu"></strong></p>
+        <p id="recap-reduction" class="hint"></p>
+        <p>Frais de livraison : <strong id="recap-prix-livraison"></strong></p>
+        <p>Total : <strong id="recap-total"></strong></p>
+      </div>
+
+      <button type="submit">Valider la commande</button>
+    </form>
+  </main>
+  <%- include("../partials/footer") %>
+
+  <script>
+    window.DONNEES_MENU = {
+      prixParPersonne: <%= menu.prix_par_personne %>,
+      nombrePersonneMinimum: <%= menu.nombre_personne_minimum %>,
+    };
+  </script>
+  <script src="/js/commande.js"></script>
+</body>
+</html>
