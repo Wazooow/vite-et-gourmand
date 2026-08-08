@@ -4,6 +4,8 @@ const path = require("path");
 const session = require("express-session");
 
 const connectMongo = require("./src/config/mongo");
+const authRoutes = require("./src/routes/authRoutes");
+const { requireRole } = require("./src/middlewares/auth");
 
 const app = express();
 
@@ -24,11 +26,34 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
+  res.locals.flash = req.session.flash || null;
+  delete req.session.flash;
   next();
 });
 
 app.get("/", (req, res) => {
   res.render("home");
+});
+
+app.use("/auth", authRoutes);
+
+// Espaces protégés — pages détaillées à venir (tâches #8, #9, #10)
+app.get("/mon-compte", requireRole("utilisateur"), (req, res) => {
+  res.render("erreur", { title: "Mon compte", message: "Espace utilisateur à venir." });
+});
+app.get("/employe", requireRole("employe"), (req, res) => {
+  res.render("erreur", { title: "Espace employé", message: "Espace employé à venir." });
+});
+app.get("/admin", requireRole("administrateur"), (req, res) => {
+  res.render("erreur", { title: "Espace administrateur", message: "Espace administrateur à venir." });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).render("erreur", {
+    title: "Erreur",
+    message: "Une erreur est survenue. Réessaie dans un instant.",
+  });
 });
 
 const PORT = process.env.PORT || 3000;

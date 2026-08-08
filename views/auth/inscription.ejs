@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Créer un compte" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main>
+    <h1>Créer un compte</h1>
+    <%- include("../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="/auth/inscription" class="form">
+      <label>Nom
+        <input type="text" name="nom" value="<%= valeurs.nom || '' %>" required>
+      </label>
+      <label>Prénom
+        <input type="text" name="prenom" value="<%= valeurs.prenom || '' %>" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" value="<%= valeurs.email || '' %>" required>
+      </label>
+      <label>Téléphone
+        <input type="tel" name="telephone" value="<%= valeurs.telephone || '' %>" required>
+      </label>
+      <label>Adresse postale
+        <input type="text" name="adresse_postale" value="<%= valeurs.adresse_postale || '' %>">
+      </label>
+      <label>Ville
+        <input type="text" name="ville" value="<%= valeurs.ville || '' %>">
+      </label>
+      <label>Pays
+        <input type="text" name="pays" value="<%= valeurs.pays || '' %>">
+      </label>
+      <label>Mot de passe
+        <input type="password" name="password" required minlength="10">
+      </label>
+      <label>Confirmer le mot de passe
+        <input type="password" name="password_confirmation" required minlength="10">
+      </label>
+      <p class="hint">10 caractères minimum, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+      <button type="submit">Créer mon compte</button>
+    </form>
+    <p><a href="/auth/connexion">J'ai déjà un compte</a></p>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>
