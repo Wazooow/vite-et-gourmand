@@ -10,21 +10,41 @@
     <section class="hero">
       <h1>Vite &amp; Gourmand</h1>
       <p>Traiteur événementiel à Bordeaux depuis 25 ans.</p>
+      <a href="/menus" class="bouton">Découvrir nos menus</a>
     </section>
 
     <section class="presentation">
       <h2>L'entreprise</h2>
-      <p>À compléter : présentation de Julie et José, 25 ans d'expérience.</p>
+      <p>
+        Depuis 25 ans, Julie et José font vivre « Vite &amp; Gourmand » à Bordeaux : une cuisine
+        généreuse pour tous vos événements, du simple repas de famille aux grandes occasions
+        comme Noël ou Pâques.
+      </p>
     </section>
 
     <section class="equipe">
       <h2>Notre équipe</h2>
-      <p>À compléter : mise en avant du professionnalisme de l'équipe.</p>
+      <p>
+        Une équipe de cuisine et de logistique passionnée, engagée sur chaque prestation avec le
+        même souci du détail et de la qualité, de la préparation jusqu'à la livraison.
+      </p>
     </section>
 
     <section class="avis">
-      <h2>Avis de nos clients</h2>
-      <p>À compléter : liste des avis validés.</p>
+      <h2>Ce que disent nos clients</h2>
+      <% if (avis.length === 0) { %>
+        <p>Pas encore d'avis publié.</p>
+      <% } else { %>
+        <ul class="liste-avis">
+          <% avis.forEach(function(a) { %>
+            <li class="avis-carte">
+              <strong><%= "★".repeat(a.note) %><%= "☆".repeat(5 - a.note) %></strong>
+              <p>« <%= a.description %> »</p>
+              <span>— <%= a.prenom %></span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
     </section>
   </main>
 

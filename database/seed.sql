@@ -91,3 +91,36 @@ INSERT INTO menu_plat (menu_id, plat_id)
 INSERT INTO menu_plat (menu_id, plat_id)
   SELECT m.menu_id, p.plat_id FROM menu m, plat p
   WHERE m.titre = 'Menu Végétarien du Chef' AND p.titre_plat IN ('Salade de saison', 'Risotto aux champignons', 'Fondant au chocolat');
+
+-- ---------------------------------------------------------------------------
+-- Galerie d'images
+-- ---------------------------------------------------------------------------
+INSERT INTO menu_image (menu_id, chemin, ordre)
+  SELECT menu_id, '/images/menus/menu-noel.svg', 0 FROM menu WHERE titre = 'Menu de Noël Traditionnel';
+INSERT INTO menu_image (menu_id, chemin, ordre)
+  SELECT menu_id, '/images/menus/menu-paques.svg', 0 FROM menu WHERE titre = 'Menu Pâques Champêtre';
+INSERT INTO menu_image (menu_id, chemin, ordre)
+  SELECT menu_id, '/images/menus/menu-vegetarien.svg', 0 FROM menu WHERE titre = 'Menu Végétarien du Chef';
+
+-- ---------------------------------------------------------------------------
+-- Une commande "terminée" de démo + un avis validé (pour peupler l'accueil)
+-- ---------------------------------------------------------------------------
+INSERT INTO commande (
+  numero_commande, utilisateur_id, menu_id, date_commande, date_prestation, heure_livraison,
+  adresse_livraison, ville_livraison, code_postal_livraison, distance_km,
+  nombre_personne, prix_menu, prix_livraison, statut
+)
+SELECT
+  'CMD-2026-000001',
+  (SELECT utilisateur_id FROM utilisateur WHERE email = 'client@test.fr'),
+  menu_id,
+  '2026-07-01 10:00:00', '2026-07-15', '19:00:00',
+  '3 rue du Client', 'Mérignac', '33700', 8.5,
+  6, 270.00, 10.02, 'terminee'
+FROM menu WHERE titre = 'Menu de Noël Traditionnel';
+
+INSERT INTO avis (utilisateur_id, commande_id, note, description, statut)
+SELECT
+  (SELECT utilisateur_id FROM utilisateur WHERE email = 'client@test.fr'),
+  commande_id, 5, 'Un repas délicieux et un service impeccable, je recommande !', 'valide'
+FROM commande WHERE numero_commande = 'CMD-2026-000001';

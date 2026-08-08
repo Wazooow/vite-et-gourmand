@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: menu.titre }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+
+  <main class="detail-menu">
+    <% if (images.length > 0) { %>
+      <div class="galerie">
+        <% images.forEach(function(img) { %>
+          <img src="<%= img.chemin %>" alt="<%= menu.titre %>">
+        <% }) %>
+      </div>
+    <% } %>
+
+    <h1><%= menu.titre %></h1>
+    <p class="tags"><span><%= menu.theme %></span> · <span><%= menu.regime %></span></p>
+    <p><%= menu.description %></p>
+
+    <h2>Composition</h2>
+    <ul class="liste-plats">
+      <% plats.forEach(function(p) { %>
+        <li>
+          <strong><%= p.titre_plat %></strong> (<%= p.type_plat %>)
+          <% if (p.allergenes) { %>
+            <span class="allergenes">Allergènes : <%= p.allergenes %></span>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+
+    <h2>Conditions</h2>
+    <p><%= menu.conditions %></p>
+
+    <div class="recap-prix">
+      <p>À partir de <strong><%= menu.nombre_personne_minimum %> personnes</strong></p>
+      <p><strong><%= Number(menu.prix_par_personne).toFixed(2) %> €</strong> / personne</p>
+      <p class="stock"><%= menu.quantite_restante > 0 ? menu.quantite_restante + " disponibles" : "Épuisé" %></p>
+    </div>
+
+    <% if (menu.quantite_restante > 0) { %>
+      <% if (typeof user !== "undefined" && user && user.role === "utilisateur") { %>
+        <a href="/commandes/nouvelle?menu=<%= menu.menu_id %>" class="bouton">Commander ce menu</a>
+      <% } else if (typeof user !== "undefined" && user) { %>
+        <p class="hint">Seuls les comptes clients peuvent commander.</p>
+      <% } else { %>
+        <p>
+          <a href="/auth/connexion?menu=<%= menu.menu_id %>" class="bouton">Se connecter pour commander</a>
+          ou <a href="/auth/inscription">créer un compte</a>.
+        </p>
+      <% } %>
+    <% } else { %>
+      <p class="hint">Ce menu n'est plus disponible actuellement.</p>
+    <% } %>
+  </main>
+
+  <%- include("../partials/footer") %>
+</body>
+</html>

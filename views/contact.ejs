@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("partials/head", { title: "Contact" }) %>
+</head>
+<body>
+  <%- include("partials/header") %>
+  <main>
+    <h1>Nous contacter</h1>
+
+    <% if (envoye) { %>
+      <div class="message message-succes">Ton message a bien été envoyé, on te répond au plus vite.</div>
+    <% } else { %>
+      <%- include("partials/messages", { erreurs: erreurs }) %>
+      <form method="POST" action="/contact" class="form">
+        <label>Titre
+          <input type="text" name="titre" value="<%= valeurs.titre || '' %>" required>
+        </label>
+        <label>Ton email
+          <input type="email" name="mail" value="<%= valeurs.mail || '' %>" required>
+        </label>
+        <label>Message
+          <textarea name="description" rows="6" required><%= valeurs.description || '' %></textarea>
+        </label>
+        <button type="submit">Envoyer</button>
+      </form>
+    <% } %>
+  </main>
+  <%- include("partials/footer") %>
+</body>
+</html>
