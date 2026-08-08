@@ -282,3 +282,52 @@ section {
   padding: 0.6rem;
   border-bottom: 1px solid #eee;
 }
+
+.menu-espace {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 320px;
+}
+
+.menu-espace a {
+  display: block;
+  padding: 0.75rem 1rem;
+  background: #f7f5fa;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #6b3fa0;
+  font-weight: 600;
+}
+
+.form-large {
+  max-width: 640px;
+}
+
+.form-large fieldset {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.case-a-cocher {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.5rem !important;
+  font-weight: 400 !important;
+  display: flex;
+}
+
+.galerie-item {
+  display: inline-block;
+  margin-right: 1rem;
+  text-align: center;
+}
+
+.galerie-item img {
+  height: 120px;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 0.25rem;
+}

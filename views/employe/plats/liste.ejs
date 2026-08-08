@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Gérer les plats" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main>
+    <h1>Plats</h1>
+    <%- include("../../partials/messages", {}) %>
+    <p><a href="/employe/plats/nouveau" class="bouton">+ Nouveau plat</a></p>
+
+    <table class="tableau">
+      <thead><tr><th>Titre</th><th>Type</th><th></th></tr></thead>
+      <tbody>
+        <% plats.forEach(function(p) { %>
+          <tr>
+            <td><%= p.titre_plat %></td>
+            <td><%= p.type_plat %></td>
+            <td>
+              <a href="/employe/plats/<%= p.plat_id %>/modifier">Modifier</a>
+              <form method="POST" action="/employe/plats/<%= p.plat_id %>/supprimer" onsubmit="return confirm('Supprimer ce plat ?');" style="display:inline">
+                <button type="submit">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>
