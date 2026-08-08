@@ -10,12 +10,13 @@ function afficherInscription(req, res) {
 }
 
 async function inscrire(req, res) {
-  const { nom, prenom, email, telephone, ville, pays, adresse_postale, password, password_confirmation } = req.body;
+  const { nom, prenom, email, telephone, ville, pays, adresse_postale, password, password_confirmation, consentement } = req.body;
   const erreurs = [];
 
   if (!nom || !prenom) erreurs.push("Le nom et le prénom sont obligatoires.");
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) erreurs.push("L'email n'est pas valide.");
   if (!telephone) erreurs.push("Le numéro de téléphone est obligatoire.");
+  if (!consentement) erreurs.push("Tu dois accepter la politique de confidentialité pour créer un compte.");
 
   const politiqueMdp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{10,}$/;
   if (!politiqueMdp.test(password || "")) {

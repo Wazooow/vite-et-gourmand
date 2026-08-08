@@ -5,7 +5,7 @@
 </head>
 <body>
   <%- include("../partials/header") %>
-  <main>
+  <main id="contenu-principal">
     <h1>Mes informations personnelles</h1>
     <%- include("../partials/messages", { erreurs: erreurs }) %>
 
@@ -34,6 +34,12 @@
       <button type="submit">Enregistrer</button>
     </form>
     <p class="hint">Pour changer de mot de passe, utilise <a href="/auth/mot-de-passe-oublie">le lien de réinitialisation</a>.</p>
+
+    <h2>Supprimer mon compte</h2>
+    <p class="hint">Conformément au RGPD, tu peux demander la suppression de ton compte. Tes informations personnelles seront anonymisées ; l'historique de tes commandes est conservé à des fins comptables.</p>
+    <form method="POST" action="/mon-compte/supprimer" onsubmit="return confirm('Supprimer définitivement ton compte ? Cette action est irréversible.');">
+      <button type="submit" class="bouton-danger">Supprimer mon compte</button>
+    </form>
   </main>
   <%- include("../partials/footer") %>
 </body>

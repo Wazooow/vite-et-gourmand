@@ -45,4 +45,8 @@ function cgv(req, res) {
   res.render("cgv");
 }
 
-module.exports = { accueil, afficherContact, envoyerContact, mentionsLegales, cgv };
+function politiqueConfidentialite(req, res) {
+  res.render("politique-confidentialite");
+}
+
+module.exports = { accueil, afficherContact, envoyerContact, mentionsLegales, cgv, politiqueConfidentialite };
