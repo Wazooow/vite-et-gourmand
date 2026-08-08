@@ -1,0 +1,17 @@
+<% if (menus.length === 0) { %>
+  <p class="aucun-resultat">Aucun menu ne correspond à ces critères.</p>
+<% } else { %>
+  <% menus.forEach(function(m) { %>
+    <article class="carte-menu">
+      <% if (m.image) { %>
+        <img src="<%= m.image %>" alt="<%= m.titre %>">
+      <% } %>
+      <h3><%= m.titre %></h3>
+      <p class="tags"><span><%= m.theme %></span> · <span><%= m.regime %></span></p>
+      <p><%= m.description %></p>
+      <p>À partir de <strong><%= m.nombre_personne_minimum %> personnes</strong> — <strong><%= Number(m.prix_par_personne).toFixed(2) %> €/pers.</strong></p>
+      <p class="stock"><%= m.quantite_restante > 0 ? m.quantite_restante + " disponibles" : "Épuisé" %></p>
+      <a href="/menus/<%= m.menu_id %>" class="bouton">Voir le menu</a>
+    </article>
+  <% }) %>
+<% } %>

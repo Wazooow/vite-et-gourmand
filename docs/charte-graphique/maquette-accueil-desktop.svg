@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" font-family="Arial, sans-serif">
+  <rect width="1280" height="900" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1280" height="64" fill="#6b3fa0"/>
+  <text x="30" y="40" font-size="20" fill="#ffffff" font-weight="bold">Vite &amp; Gourmand</text>
+  <text x="900" y="38" font-size="14" fill="#ffffff">Accueil</text>
+  <text x="985" y="38" font-size="14" fill="#ffffff">Menus</text>
+  <text x="1060" y="38" font-size="14" fill="#ffffff">Contact</text>
+  <text x="1150" y="38" font-size="14" fill="#ffffff">Connexion</text>
+
+  <!-- Hero -->
+  <rect x="0" y="64" width="1280" height="220" fill="#f7f5fa"/>
+  <text x="640" y="160" text-anchor="middle" font-size="40" fill="#33234a" font-weight="bold">Vite &amp; Gourmand</text>
+  <text x="640" y="195" text-anchor="middle" font-size="16" fill="#555">Traiteur événementiel à Bordeaux depuis 25 ans.</text>
+  <rect x="555" y="220" width="170" height="42" rx="4" fill="#6b3fa0"/>
+  <text x="640" y="247" text-anchor="middle" font-size="14" fill="#ffffff">Découvrir nos menus</text>
+
+  <!-- Sections -->
+  <text x="60" y="340" font-size="20" fill="#33234a">L'entreprise</text>
+  <text x="60" y="368" font-size="13" fill="#555">Depuis 25 ans, Julie et José font vivre « Vite &amp; Gourmand » à Bordeaux...</text>
+
+  <text x="60" y="430" font-size="20" fill="#33234a">Notre équipe</text>
+  <text x="60" y="458" font-size="13" fill="#555">Une équipe de cuisine et de logistique passionnée, engagée sur chaque prestation...</text>
+
+  <text x="60" y="520" font-size="20" fill="#33234a">Ce que disent nos clients</text>
+  <g>
+    <rect x="60" y="545" width="360" height="120" rx="6" fill="#ffffff" stroke="#eeeeee"/>
+    <text x="80" y="575" font-size="16" fill="#e0a526">★★★★★</text>
+    <text x="80" y="605" font-size="12" fill="#444">« Un repas délicieux et un</text>
+    <text x="80" y="622" font-size="12" fill="#444">service impeccable ! »</text>
+    <text x="80" y="645" font-size="12" fill="#777">— Camille</text>
+  </g>
+  <rect x="440" y="545" width="360" height="120" rx="6" fill="#ffffff" stroke="#eeeeee"/>
+  <rect x="820" y="545" width="360" height="120" rx="6" fill="#ffffff" stroke="#eeeeee"/>
+
+  <!-- Footer -->
+  <rect x="0" y="800" width="1280" height="100" fill="#222222"/>
+  <text x="30" y="835" font-size="13" fill="#dddddd">Horaires</text>
+  <text x="30" y="858" font-size="11" fill="#aaaaaa">Lundi : 09:00 – 18:00   Mardi : 09:00 – 18:00 ...</text>
+  <text x="900" y="835" font-size="11" fill="#dddddd">Mentions légales</text>
+  <text x="1010" y="835" font-size="11" fill="#dddddd">CGV</text>
+  <text x="1070" y="835" font-size="11" fill="#dddddd">Confidentialité</text>
+
+  <text x="20" y="20" font-size="12" fill="#999" font-weight="bold">MAQUETTE — Accueil (desktop, 1280px)</text>
+</svg>

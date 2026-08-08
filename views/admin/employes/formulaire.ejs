@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Nouveau compte employé" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Nouveau compte employé</h1>
+    <p class="hint">Le mot de passe que tu choisis ici ne sera pas envoyé par email : communique-le directement à l'employé.</p>
+    <%- include("../../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="/admin/employes" class="form">
+      <label>Nom
+        <input type="text" name="nom" value="<%= valeurs.nom || '' %>" required>
+      </label>
+      <label>Prénom
+        <input type="text" name="prenom" value="<%= valeurs.prenom || '' %>" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" value="<%= valeurs.email || '' %>" required>
+      </label>
+      <label>Téléphone
+        <input type="tel" name="telephone" value="<%= valeurs.telephone || '' %>">
+      </label>
+      <label>Mot de passe initial
+        <input type="password" name="password" required minlength="10">
+      </label>
+      <p class="hint">10 caractères minimum, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+      <button type="submit">Créer le compte</button>
+    </form>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>

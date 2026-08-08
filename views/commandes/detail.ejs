@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Commande " + commande.numero_commande }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Commande <%= commande.numero_commande %></h1>
+    <%- include("../partials/messages", {}) %>
+
+    <p><strong><%= commande.menu_titre %></strong> — <%= commande.nombre_personne %> personnes</p>
+    <p>Prestation le <%= new Date(commande.date_prestation).toLocaleDateString("fr-FR") %> à <%= commande.heure_livraison %></p>
+    <p>Livraison : <%= commande.adresse_livraison %>, <%= commande.code_postal_livraison %> <%= commande.ville_livraison %></p>
+    <p>
+      Prix menu : <strong><%= Number(commande.prix_menu).toFixed(2) %> €</strong>
+      <% if (commande.reduction_appliquee) { %><span class="hint">(réduction 10% appliquée)</span><% } %>
+      — Livraison : <strong><%= Number(commande.prix_livraison).toFixed(2) %> €</strong>
+      — Total : <strong><%= (Number(commande.prix_menu) + Number(commande.prix_livraison)).toFixed(2) %> €</strong>
+    </p>
+
+    <h2>Suivi de la commande</h2>
+    <ul class="suivi-statuts">
+      <% historique.forEach(function(h) { %>
+        <li><%= h.statut %> — <%= new Date(h.date_changement).toLocaleString("fr-FR") %></li>
+      <% }) %>
+    </ul>
+
+    <% if (commande.statut === "en_attente") { %>
+      <div class="actions">
+        <a href="/commandes/<%= commande.commande_id %>/modifier" class="bouton">Modifier</a>
+        <form method="POST" action="/commandes/<%= commande.commande_id %>/annuler" onsubmit="return confirm('Confirmer l\'annulation de cette commande ?');">
+          <button type="submit">Annuler la commande</button>
+        </form>
+      </div>
+    <% } %>
+
+    <% if (commande.statut === "terminee" && !dejaNote) { %>
+      <h2>Laisser un avis</h2>
+      <form method="POST" action="/commandes/<%= commande.commande_id %>/avis" class="form">
+        <label>Note
+          <select name="note" required>
+            <option value="">—</option>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Très bien</option>
+            <option value="3">3 - Bien</option>
+            <option value="2">2 - Moyen</option>
+            <option value="1">1 - Décevant</option>
+          </select>
+        </label>
+        <label>Commentaire
+          <textarea name="description" rows="4"></textarea>
+        </label>
+        <button type="submit">Envoyer mon avis</button>
+      </form>
+    <% } %>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

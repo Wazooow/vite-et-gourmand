@@ -1,0 +1,20 @@
+<footer class="site-footer">
+  <div class="footer-horaires">
+    <h3>Horaires</h3>
+    <% if (typeof horaires !== "undefined" && horaires && horaires.length > 0) { %>
+      <ul class="liste-horaires">
+        <% horaires.forEach(function(h) { %>
+          <li>
+            <%= h.jour.charAt(0).toUpperCase() + h.jour.slice(1) %> :
+            <%= h.heure_ouverture ? h.heure_ouverture.slice(0,5) + " – " + h.heure_fermeture.slice(0,5) : "Fermé" %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+  <div class="footer-links">
+    <a href="/mentions-legales">Mentions légales</a>
+    <a href="/cgv">Conditions générales de vente</a>
+    <a href="/politique-confidentialite">Politique de confidentialité</a>
+  </div>
+</footer>

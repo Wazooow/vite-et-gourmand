@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Mot de passe oublié" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Mot de passe oublié</h1>
+    <% if (message) { %>
+      <div class="message message-succes"><%= message %></div>
+    <% } else { %>
+      <form method="POST" action="/auth/mot-de-passe-oublie" class="form">
+        <label>Email
+          <input type="email" name="email" required>
+        </label>
+        <button type="submit">Recevoir un lien de réinitialisation</button>
+      </form>
+    <% } %>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

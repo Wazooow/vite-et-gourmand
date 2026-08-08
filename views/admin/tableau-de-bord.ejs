@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Espace administrateur" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Espace administrateur</h1>
+    <ul class="menu-espace">
+      <li><a href="/admin/employes">Comptes employés</a></li>
+      <li><a href="/admin/statistiques">Statistiques</a></li>
+      <li><a href="/employe">Espace employé (menus, commandes, avis...)</a></li>
+    </ul>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

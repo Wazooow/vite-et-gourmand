@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Comptes employés" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Comptes employés</h1>
+    <%- include("../../partials/messages", {}) %>
+    <p><a href="/admin/employes/nouveau" class="bouton">+ Nouveau compte employé</a></p>
+
+    <table class="tableau">
+      <thead><tr><th>Nom</th><th>Email</th><th>Statut</th><th></th></tr></thead>
+      <tbody>
+        <% employes.forEach(function(e) { %>
+          <tr>
+            <td><%= e.prenom %> <%= e.nom %></td>
+            <td><%= e.email %></td>
+            <td><%= e.actif ? "Actif" : "Désactivé" %></td>
+            <td>
+              <% if (e.actif) { %>
+                <form method="POST" action="/admin/employes/<%= e.utilisateur_id %>/desactiver" onsubmit="return confirm('Désactiver ce compte ?');" style="display:inline">
+                  <button type="submit">Désactiver</button>
+                </form>
+              <% } else { %>
+                <form method="POST" action="/admin/employes/<%= e.utilisateur_id %>/activer" style="display:inline">
+                  <button type="submit">Réactiver</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>

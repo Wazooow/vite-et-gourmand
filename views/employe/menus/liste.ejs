@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Gérer les menus" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Menus</h1>
+    <%- include("../../partials/messages", {}) %>
+    <p><a href="/employe/menus/nouveau" class="bouton">+ Nouveau menu</a></p>
+
+    <table class="tableau">
+      <thead><tr><th>Titre</th><th>Thème</th><th>Prix/pers.</th><th>Stock</th><th>Statut</th><th></th></tr></thead>
+      <tbody>
+        <% menus.forEach(function(m) { %>
+          <tr>
+            <td><%= m.titre %></td>
+            <td><%= m.theme %></td>
+            <td><%= Number(m.prix_par_personne).toFixed(2) %> €</td>
+            <td><%= m.quantite_restante %></td>
+            <td><%= m.actif ? "Actif" : "Désactivé" %></td>
+            <td>
+              <a href="/employe/menus/<%= m.menu_id %>/modifier">Modifier</a>
+              <% if (m.actif) { %>
+                <form method="POST" action="/employe/menus/<%= m.menu_id %>/supprimer" onsubmit="return confirm('Désactiver ce menu ?');" style="display:inline">
+                  <button type="submit">Désactiver</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>

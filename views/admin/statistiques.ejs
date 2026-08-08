@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Statistiques" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Statistiques des commandes</h1>
+    <p class="hint">Données issues de la base non relationnelle (MongoDB), alimentée à chaque commande créée.</p>
+
+    <form method="GET" action="/admin/statistiques" class="filtres">
+      <label>Menu
+        <select name="menu">
+          <option value="">Tous les menus</option>
+          <% menus.forEach(function(m) { %>
+            <option value="<%= m.menu_id %>" <%= String(filtres.menu) === String(m.menu_id) ? "selected" : "" %>><%= m.titre %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Du
+        <input type="date" name="debut" value="<%= filtres.debut || '' %>">
+      </label>
+      <label>Au
+        <input type="date" name="fin" value="<%= filtres.fin || '' %>">
+      </label>
+      <button type="submit">Filtrer</button>
+    </form>
+
+    <p><strong>Chiffre d'affaires total (période filtrée) : <%= caTotal.toFixed(2) %> €</strong></p>
+
+    <h2>Commandes par menu</h2>
+    <% if (resultats.length === 0) { %>
+      <p>Aucune commande sur cette période.</p>
+    <% } else { %>
+      <div class="graphique-barres">
+        <% resultats.forEach(function(r) { %>
+          <div class="barre-ligne">
+            <span class="barre-label"><%= r.menuTitre %></span>
+            <div class="barre-piste">
+              <div class="barre-remplissage" style="width: <%= (r.nombreCommandes / maxCommandes * 100).toFixed(1) %>%"></div>
+            </div>
+            <span class="barre-valeur"><%= r.nombreCommandes %> commande<%= r.nombreCommandes > 1 ? 's' : '' %></span>
+          </div>
+        <% }) %>
+      </div>
+
+      <table class="tableau">
+        <thead><tr><th>Menu</th><th>Nombre de commandes</th><th>Chiffre d'affaires</th></tr></thead>
+        <tbody>
+          <% resultats.forEach(function(r) { %>
+            <tr>
+              <td><%= r.menuTitre %></td>
+              <td><%= r.nombreCommandes %></td>
+              <td><%= r.chiffreAffaires.toFixed(2) %> €</td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

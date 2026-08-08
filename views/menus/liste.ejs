@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Nos menus" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+
+  <main id="contenu-principal">
+    <h1>Nos menus</h1>
+
+    <form id="filtres-menus" class="filtres">
+      <label>Prix min (€/pers.)
+        <input type="number" name="prixMin" min="0" step="1" value="<%= filtres.prixMin || '' %>">
+      </label>
+      <label>Prix max (€/pers.)
+        <input type="number" name="prixMax" min="0" step="1" value="<%= filtres.prixMax || '' %>">
+      </label>
+      <label>Thème
+        <select name="theme">
+          <option value="">Tous</option>
+          <% themes.forEach(function(t) { %>
+            <option value="<%= t.theme_id %>" <%= String(filtres.theme) === String(t.theme_id) ? "selected" : "" %>><%= t.libelle %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Régime
+        <select name="regime">
+          <option value="">Tous</option>
+          <% regimes.forEach(function(r) { %>
+            <option value="<%= r.regime_id %>" <%= String(filtres.regime) === String(r.regime_id) ? "selected" : "" %>><%= r.libelle %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Nombre de personnes
+        <input type="number" name="personnes" min="1" step="1" value="<%= filtres.personnes || '' %>">
+      </label>
+    </form>
+
+    <div id="liste-menus" class="grille-menus">
+      <%- include("../partials/cartes-menus", { menus }) %>
+    </div>
+  </main>
+
+  <%- include("../partials/footer") %>
+  <script src="/js/menus.js"></script>
+</body>
+</html>

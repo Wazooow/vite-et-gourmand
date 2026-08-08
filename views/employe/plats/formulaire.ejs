@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: plat ? "Modifier le plat" : "Nouveau plat" }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main id="contenu-principal">
+    <h1><%= plat && plat.plat_id ? "Modifier le plat" : "Nouveau plat" %></h1>
+    <%- include("../../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="<%= plat && plat.plat_id ? '/employe/plats/' + plat.plat_id + '/modifier' : '/employe/plats' %>" class="form">
+      <label>Titre du plat
+        <input type="text" name="titre_plat" value="<%= (plat && plat.titre_plat) || '' %>" required>
+      </label>
+      <label>Type
+        <select name="type_plat" required>
+          <option value="entree" <%= plat && plat.type_plat === "entree" ? "selected" : "" %>>Entrée</option>
+          <option value="plat" <%= plat && plat.type_plat === "plat" ? "selected" : "" %>>Plat</option>
+          <option value="dessert" <%= plat && plat.type_plat === "dessert" ? "selected" : "" %>>Dessert</option>
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>Allergènes</legend>
+        <% allergenes.forEach(function(a) { %>
+          <label class="case-a-cocher">
+            <input type="checkbox" name="allergenes" value="<%= a.allergene_id %>" <%= allergenesSelectionnes.includes(a.allergene_id) ? "checked" : "" %>>
+            <%= a.libelle %>
+          </label>
+        <% }) %>
+      </fieldset>
+
+      <button type="submit">Enregistrer</button>
+    </form>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>

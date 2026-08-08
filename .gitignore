@@ -2,3 +2,5 @@ node_modules/
 .env
 *.log
 .DS_Store
+public/uploads/menus/*
+!public/uploads/menus/.gitkeep

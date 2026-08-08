@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Horaires" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Horaires d'ouverture</h1>
+    <%- include("../partials/messages", {}) %>
+
+    <form method="POST" action="/employe/horaires" class="form form-large">
+      <% horaires.forEach(function(h) { %>
+        <fieldset>
+          <legend><%= h.jour.charAt(0).toUpperCase() + h.jour.slice(1) %></legend>
+          <label class="case-a-cocher">
+            <input type="checkbox" name="ferme_<%= h.jour %>" <%= !h.heure_ouverture ? "checked" : "" %>>
+            Fermé ce jour
+          </label>
+          <label>Ouverture
+            <input type="time" name="ouverture_<%= h.jour %>" value="<%= h.heure_ouverture || '' %>">
+          </label>
+          <label>Fermeture
+            <input type="time" name="fermeture_<%= h.jour %>" value="<%= h.heure_fermeture || '' %>">
+          </label>
+        </fieldset>
+      <% }) %>
+      <button type="submit">Enregistrer</button>
+    </form>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

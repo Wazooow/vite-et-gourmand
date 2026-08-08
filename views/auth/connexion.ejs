@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Connexion" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Connexion</h1>
+    <%- include("../partials/messages", { erreur: erreur }) %>
+
+    <form method="POST" action="/auth/connexion" class="form">
+      <label>Email
+        <input type="email" name="email" value="<%= valeurs.email || '' %>" required>
+      </label>
+      <label>Mot de passe
+        <input type="password" name="password" required>
+      </label>
+      <button type="submit">Se connecter</button>
+    </form>
+    <p><a href="/auth/mot-de-passe-oublie">Mot de passe oublié ?</a></p>
+    <p><a href="/auth/inscription">Créer un compte</a></p>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

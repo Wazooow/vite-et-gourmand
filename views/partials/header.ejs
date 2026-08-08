@@ -1,0 +1,24 @@
+<a href="#contenu-principal" class="lien-evitement">Aller au contenu principal</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="/" class="nav-brand">Vite &amp; Gourmand</a>
+    <ul class="nav-links">
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/menus">Menus</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <% if (typeof user !== "undefined" && user) { %>
+        <% if (user.role === "administrateur") { %>
+          <li><a href="/admin">Espace admin</a></li>
+        <% } else if (user.role === "employe") { %>
+          <li><a href="/employe">Espace employé</a></li>
+        <% } else { %>
+          <li><a href="/mon-compte">Mon compte</a></li>
+        <% } %>
+        <li><a href="/auth/deconnexion">Déconnexion</a></li>
+      <% } else { %>
+        <li><a href="/auth/connexion">Connexion</a></li>
+        <li><a href="/auth/inscription">Créer un compte</a></li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

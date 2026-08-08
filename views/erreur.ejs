@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("partials/head", { title: title || "Erreur" }) %>
+</head>
+<body>
+  <%- include("partials/header") %>
+  <main id="contenu-principal">
+    <h1><%= title || "Erreur" %></h1>
+    <p><%= message %></p>
+  </main>
+  <%- include("partials/footer") %>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Commande " + commande.numero_commande }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Commande <%= commande.numero_commande %></h1>
+    <%- include("../../partials/messages", {}) %>
+
+    <p><strong>Client :</strong> <%= commande.prenom %> <%= commande.nom %> — <%= commande.email %> — <%= commande.telephone %></p>
+    <p><strong>Menu :</strong> <%= commande.menu_titre %> — <%= commande.nombre_personne %> personnes</p>
+    <p><strong>Prestation :</strong> <%= new Date(commande.date_prestation).toLocaleDateString("fr-FR") %> à <%= commande.heure_livraison %></p>
+    <p><strong>Livraison :</strong> <%= commande.adresse_livraison %>, <%= commande.code_postal_livraison %> <%= commande.ville_livraison %></p>
+    <p><strong>Prix :</strong> menu <%= Number(commande.prix_menu).toFixed(2) %> € — livraison <%= Number(commande.prix_livraison).toFixed(2) %> €</p>
+    <p><strong>Statut actuel :</strong> <%= commande.statut %></p>
+    <% if (commande.pret_materiel) { %>
+      <p><strong>Matériel prêté</strong> — restitué : <%= commande.restitution_materiel ? "oui" : "non" %>
+        <% if (commande.date_limite_restitution) { %> (date limite : <%= new Date(commande.date_limite_restitution).toLocaleDateString("fr-FR") %>)<% } %>
+      </p>
+    <% } %>
+    <% if (commande.motif_derniere_modif) { %>
+      <p class="hint"><%= commande.motif_derniere_modif %></p>
+    <% } %>
+
+    <h2>Historique</h2>
+    <ul class="suivi-statuts">
+      <% historique.forEach(function(h) { %>
+        <li><%= h.statut %> — <%= new Date(h.date_changement).toLocaleString("fr-FR") %></li>
+      <% }) %>
+    </ul>
+
+    <% if (prochainsStatuts.length > 0) { %>
+      <h2>Faire avancer la commande</h2>
+      <form method="POST" action="/employe/commandes/<%= commande.commande_id %>/statut" class="form">
+        <label>Nouveau statut
+          <select name="nouveau_statut">
+            <% prochainsStatuts.forEach(function(s) { %>
+              <option value="<%= s %>"><%= s %></option>
+            <% }) %>
+          </select>
+        </label>
+        <button type="submit">Valider</button>
+      </form>
+    <% } %>
+
+    <% if (!["terminee", "annulee"].includes(commande.statut)) { %>
+      <h2>Annuler la commande</h2>
+      <p class="hint">L'annulation nécessite d'avoir contacté le client au préalable (appel ou email).</p>
+      <form method="POST" action="/employe/commandes/<%= commande.commande_id %>/annuler" class="form">
+        <label>Mode de contact
+          <select name="mode_contact" required>
+            <option value="">—</option>
+            <option value="téléphone">Téléphone</option>
+            <option value="email">Email</option>
+          </select>
+        </label>
+        <label>Motif
+          <textarea name="motif" rows="3" required></textarea>
+        </label>
+        <button type="submit">Annuler la commande</button>
+      </form>
+    <% } %>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>
