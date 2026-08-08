@@ -5,6 +5,9 @@ const session = require("express-session");
 
 const connectMongo = require("./src/config/mongo");
 const authRoutes = require("./src/routes/authRoutes");
+const pageRoutes = require("./src/routes/pageRoutes");
+const menuRoutes = require("./src/routes/menuRoutes");
+const apiRoutes = require("./src/routes/apiRoutes");
 const { requireRole } = require("./src/middlewares/auth");
 
 const app = express();
@@ -31,11 +34,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
+app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
+app.use("/menus", menuRoutes);
+app.use("/api", apiRoutes);
 
 // Espaces protégés — pages détaillées à venir (tâches #8, #9, #10)
 app.get("/mon-compte", requireRole("utilisateur"), (req, res) => {

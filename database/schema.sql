@@ -66,6 +66,18 @@ CREATE TABLE menu (
 );
 
 -- ---------------------------------------------------------------------------
+-- menu_image : galerie d'images d'un menu (absent du MCD fourni, ajouté car
+-- le sujet demande explicitement une "galerie d'image" par menu)
+-- ---------------------------------------------------------------------------
+CREATE TABLE menu_image (
+  image_id  INT AUTO_INCREMENT PRIMARY KEY,
+  menu_id   INT NOT NULL,
+  chemin    VARCHAR(255) NOT NULL,
+  ordre     INT NOT NULL DEFAULT 0,
+  FOREIGN KEY (menu_id) REFERENCES menu(menu_id) ON DELETE CASCADE
+);
+
+-- ---------------------------------------------------------------------------
 -- plat
 -- ---------------------------------------------------------------------------
 CREATE TABLE plat (

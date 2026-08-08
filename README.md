@@ -50,10 +50,12 @@ cp .env.example .env
 Créer la base de données :
 
 ```bash
-mysql -u root -e "CREATE DATABASE vite_et_gourmand CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-mysql -u root vite_et_gourmand < database/schema.sql
-mysql -u root vite_et_gourmand < database/seed.sql
+mysql -u root --default-character-set=utf8mb4 -e "CREATE DATABASE vite_et_gourmand CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root --default-character-set=utf8mb4 vite_et_gourmand < database/schema.sql
+mysql -u root --default-character-set=utf8mb4 vite_et_gourmand < database/seed.sql
 ```
+
+⚠️ Le flag `--default-character-set=utf8mb4` est important sur Windows : sans lui, le client `mysql` peut mal interpréter les accents des fichiers `.sql` et corrompre les données importées (ex. "Noël" devient "No├½l").
 
 Lancer le serveur en mode développement :
 
