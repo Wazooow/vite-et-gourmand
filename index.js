@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
 
 const connectMongo = require("./src/config/mongo");
 const authRoutes = require("./src/routes/authRoutes");
@@ -15,9 +16,16 @@ const adminRoutes = require("./src/routes/adminRoutes");
 const pool = require("./src/config/mysql");
 
 const app = express();
+const enProduction = process.env.NODE_ENV === "production";
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+if (enProduction) {
+  // Nécessaire derrière le reverse proxy HTTPS de la plateforme d'hébergement,
+  // pour que req.protocol et les cookies "secure" fonctionnent correctement.
+  app.set("trust proxy", 1);
+}
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -28,6 +36,14 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    // MongoDB comme store de sessions : évite le MemoryStore par défaut
+    // (non prévu pour la production, non partagé entre instances) en
+    // réutilisant la base non relationnelle déjà provisionnée pour le projet.
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+    cookie: {
+      secure: enProduction,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
   })
 );
 
@@ -49,6 +65,8 @@ app.use(async (req, res, next) => {
   }
   next();
 });
+
+app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
