@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" font-family="Arial, sans-serif">
+  <rect width="1280" height="760" fill="#ffffff"/>
+  <rect x="0" y="0" width="1280" height="64" fill="#6b3fa0"/>
+  <text x="30" y="40" font-size="20" fill="#ffffff" font-weight="bold">Vite &amp; Gourmand</text>
+
+  <text x="30" y="110" font-size="26" fill="#33234a" font-weight="bold">Nos menus</text>
+
+  <!-- Filtres -->
+  <rect x="30" y="130" width="1220" height="70" rx="6" fill="#f7f5fa"/>
+  <rect x="50" y="150" width="180" height="30" rx="4" fill="#ffffff" stroke="#ccc"/>
+  <text x="60" y="170" font-size="11" fill="#777">Prix min</text>
+  <rect x="250" y="150" width="180" height="30" rx="4" fill="#ffffff" stroke="#ccc"/>
+  <text x="260" y="170" font-size="11" fill="#777">Prix max</text>
+  <rect x="450" y="150" width="180" height="30" rx="4" fill="#ffffff" stroke="#ccc"/>
+  <text x="460" y="170" font-size="11" fill="#777">Thème</text>
+  <rect x="650" y="150" width="180" height="30" rx="4" fill="#ffffff" stroke="#ccc"/>
+  <text x="660" y="170" font-size="11" fill="#777">Régime</text>
+  <rect x="850" y="150" width="180" height="30" rx="4" fill="#ffffff" stroke="#ccc"/>
+  <text x="860" y="170" font-size="11" fill="#777">Personnes</text>
+
+  <!-- Cartes menus -->
+  <g>
+    <rect x="30" y="230" width="380" height="300" rx="8" fill="#ffffff" stroke="#eeeeee"/>
+    <rect x="30" y="230" width="380" height="150" fill="#7a1f2b"/>
+    <text x="220" y="310" text-anchor="middle" font-size="14" fill="#ffffff">Menu de Noël</text>
+    <text x="50" y="405" font-size="15" fill="#33234a" font-weight="bold">Menu de Noël Traditionnel</text>
+    <text x="50" y="425" font-size="11" fill="#6b3fa0">Noel · Classique</text>
+    <text x="50" y="460" font-size="13" fill="#444">À partir de 6 pers. — 45,00 €/pers.</text>
+    <rect x="50" y="480" width="150" height="34" rx="4" fill="#6b3fa0"/>
+    <text x="125" y="502" text-anchor="middle" font-size="12" fill="#fff">Voir le menu</text>
+  </g>
+  <g>
+    <rect x="410" y="230" width="380" height="300" rx="8" fill="#ffffff" stroke="#eeeeee"/>
+    <rect x="410" y="230" width="380" height="150" fill="#3f7a4e"/>
+    <text x="600" y="310" text-anchor="middle" font-size="14" fill="#ffffff">Menu Pâques</text>
+    <text x="430" y="405" font-size="15" fill="#33234a" font-weight="bold">Menu Pâques Champêtre</text>
+    <text x="430" y="425" font-size="11" fill="#6b3fa0">Paques · Classique</text>
+    <text x="430" y="460" font-size="13" fill="#444">À partir de 4 pers. — 38,00 €/pers.</text>
+    <rect x="430" y="480" width="150" height="34" rx="4" fill="#6b3fa0"/>
+    <text x="505" y="502" text-anchor="middle" font-size="12" fill="#fff">Voir le menu</text>
+  </g>
+  <g>
+    <rect x="790" y="230" width="380" height="300" rx="8" fill="#ffffff" stroke="#eeeeee"/>
+    <rect x="790" y="230" width="380" height="150" fill="#5a7a1f"/>
+    <text x="980" y="310" text-anchor="middle" font-size="14" fill="#ffffff">Menu Végétarien</text>
+    <text x="810" y="405" font-size="15" fill="#33234a" font-weight="bold">Menu Végétarien du Chef</text>
+    <text x="810" y="425" font-size="11" fill="#6b3fa0">Evenement · Vegetarien</text>
+    <text x="810" y="460" font-size="13" fill="#444">À partir de 4 pers. — 32,00 €/pers.</text>
+    <rect x="810" y="480" width="150" height="34" rx="4" fill="#6b3fa0"/>
+    <text x="885" y="502" text-anchor="middle" font-size="12" fill="#fff">Voir le menu</text>
+  </g>
+
+  <rect x="0" y="700" width="1280" height="60" fill="#222222"/>
+  <text x="20" y="20" font-size="12" fill="#999" font-weight="bold">MAQUETTE — Liste des menus (desktop, 1280px)</text>
+</svg>
