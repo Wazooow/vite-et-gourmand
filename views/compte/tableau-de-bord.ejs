@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Mon compte" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main>
+    <h1>Mon compte</h1>
+    <%- include("../partials/messages", {}) %>
+
+    <p><a href="/mon-compte/informations">Modifier mes informations personnelles</a></p>
+
+    <h2>Mes commandes</h2>
+    <% if (commandes.length === 0) { %>
+      <p>Tu n'as pas encore passé de commande. <a href="/menus">Découvrir les menus</a></p>
+    <% } else { %>
+      <table class="tableau">
+        <thead>
+          <tr><th>Numéro</th><th>Menu</th><th>Date prestation</th><th>Statut</th><th>Total</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% commandes.forEach(function(c) { %>
+            <tr>
+              <td><%= c.numero_commande %></td>
+              <td><%= c.menu_titre %></td>
+              <td><%= new Date(c.date_prestation).toLocaleDateString("fr-FR") %></td>
+              <td><%= c.statut %></td>
+              <td><%= (Number(c.prix_menu) + Number(c.prix_livraison)).toFixed(2) %> €</td>
+              <td><a href="/commandes/<%= c.commande_id %>">Voir</a></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

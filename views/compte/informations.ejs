@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../partials/head", { title: "Mes informations" }) %>
+</head>
+<body>
+  <%- include("../partials/header") %>
+  <main>
+    <h1>Mes informations personnelles</h1>
+    <%- include("../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="/mon-compte/informations" class="form">
+      <label>Nom
+        <input type="text" name="nom" value="<%= valeurs.nom || '' %>" required>
+      </label>
+      <label>Prénom
+        <input type="text" name="prenom" value="<%= valeurs.prenom || '' %>" required>
+      </label>
+      <label>Email
+        <input type="email" value="<%= valeurs.email || '' %>" disabled>
+      </label>
+      <label>Téléphone
+        <input type="tel" name="telephone" value="<%= valeurs.telephone || '' %>" required>
+      </label>
+      <label>Adresse postale
+        <input type="text" name="adresse_postale" value="<%= valeurs.adresse_postale || '' %>">
+      </label>
+      <label>Ville
+        <input type="text" name="ville" value="<%= valeurs.ville || '' %>">
+      </label>
+      <label>Pays
+        <input type="text" name="pays" value="<%= valeurs.pays || '' %>">
+      </label>
+      <button type="submit">Enregistrer</button>
+    </form>
+    <p class="hint">Pour changer de mot de passe, utilise <a href="/auth/mot-de-passe-oublie">le lien de réinitialisation</a>.</p>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>
