@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 780" font-family="Arial, sans-serif">
+  <rect width="375" height="780" fill="#ffffff"/>
+  <rect x="0" y="0" width="375" height="56" fill="#6b3fa0"/>
+  <text x="16" y="34" font-size="15" fill="#ffffff" font-weight="bold">Vite &amp; Gourmand</text>
+  <rect x="330" y="20" width="24" height="4" fill="#fff"/>
+  <rect x="330" y="28" width="24" height="4" fill="#fff"/>
+  <rect x="330" y="36" width="24" height="4" fill="#fff"/>
+
+  <rect x="0" y="56" width="375" height="200" fill="#f7f5fa"/>
+  <text x="187" y="120" text-anchor="middle" font-size="22" fill="#33234a" font-weight="bold">Vite &amp; Gourmand</text>
+  <text x="187" y="150" text-anchor="middle" font-size="11" fill="#555">Traiteur événementiel</text>
+  <text x="187" y="166" text-anchor="middle" font-size="11" fill="#555">à Bordeaux depuis 25 ans.</text>
+  <rect x="97" y="190" width="180" height="38" rx="4" fill="#6b3fa0"/>
+  <text x="187" y="214" text-anchor="middle" font-size="12" fill="#ffffff">Découvrir nos menus</text>
+
+  <text x="16" y="290" font-size="16" fill="#33234a">L'entreprise</text>
+  <text x="16" y="312" font-size="11" fill="#555">Depuis 25 ans, Julie et José</text>
+  <text x="16" y="327" font-size="11" fill="#555">font vivre « Vite &amp; Gourmand »...</text>
+
+  <text x="16" y="380" font-size="16" fill="#33234a">Notre équipe</text>
+  <text x="16" y="402" font-size="11" fill="#555">Une équipe passionnée,</text>
+  <text x="16" y="417" font-size="11" fill="#555">engagée sur chaque prestation.</text>
+
+  <text x="16" y="470" font-size="16" fill="#33234a">Avis clients</text>
+  <rect x="16" y="490" width="343" height="100" rx="6" fill="#ffffff" stroke="#eeeeee"/>
+  <text x="32" y="515" font-size="14" fill="#e0a526">★★★★★</text>
+  <text x="32" y="538" font-size="11" fill="#444">« Un repas délicieux et un</text>
+  <text x="32" y="553" font-size="11" fill="#444">service impeccable ! »</text>
+  <text x="32" y="573" font-size="11" fill="#777">— Camille</text>
+
+  <rect x="0" y="700" width="375" height="80" fill="#222222"/>
+  <text x="16" y="730" font-size="11" fill="#dddddd">Horaires</text>
+  <text x="16" y="750" font-size="10" fill="#aaaaaa">Lundi : 09:00 – 18:00 ...</text>
+
+  <text x="8" y="16" font-size="10" fill="#999" font-weight="bold">MAQUETTE — Accueil (mobile, 375px)</text>
+</svg>
