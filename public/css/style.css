@@ -331,3 +331,36 @@ section {
   display: block;
   margin-bottom: 0.25rem;
 }
+
+.graphique-barres {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.barre-ligne {
+  display: grid;
+  grid-template-columns: 180px 1fr 100px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.barre-piste {
+  background: #f0e9f7;
+  border-radius: 4px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.barre-remplissage {
+  background: #6b3fa0;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+  transition: width 0.3s ease;
+}
+
+.barre-valeur {
+  font-size: 0.9rem;
+  color: #555;
+}
