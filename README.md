@@ -65,6 +65,35 @@ npm run dev
 
 L'application est disponible sur http://localhost:3000
 
+## Déploiement
+
+L'application est prévue pour être déployée sur **[Railway](https://railway.app/)**, qui permet d'héberger au même endroit le service Node.js, une base MySQL et une base MongoDB (via son marketplace de plugins), le tout relié au dépôt GitHub pour un déploiement automatique à chaque push sur `main`.
+
+### Étapes
+
+1. **Créer un compte Railway** (connexion possible avec le compte GitHub déjà utilisé pour ce dépôt).
+2. **Nouveau projet** → *Deploy from GitHub repo* → sélectionner `Wazooow/vite-et-gourmand`, branche `main`.
+3. **Ajouter un plugin MySQL** au projet (bouton *New* → *Database* → *MySQL*). Railway fournit automatiquement les variables `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, `MYSQLDATABASE`.
+4. **Ajouter un plugin MongoDB** au projet (*New* → *Database* → *MongoDB*). Railway fournit `MONGO_URL`.
+5. **Configurer les variables d'environnement** du service Node (onglet *Variables*) :
+   - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` → recopier les valeurs `MYSQLHOST`/`MYSQLPORT`/`MYSQLUSER`/`MYSQLPASSWORD`/`MYSQLDATABASE` fournies par le plugin MySQL (ou les référencer directement avec la syntaxe `${{MySQL.MYSQLHOST}}` etc.)
+   - `MONGO_URI` → valeur de `MONGO_URL` fournie par le plugin MongoDB
+   - `SESSION_SECRET` → une chaîne aléatoire longue et secrète (différente de celle utilisée en local)
+   - `NODE_ENV` → `production`
+   - `MAIL_HOST`, `MAIL_PORT`, `MAIL_USER`, `MAIL_PASS`, `MAIL_FROM` → les identifiants d'un vrai fournisseur SMTP (voir ci-dessous)
+   - `CONTACT_EMAIL` → l'adresse qui doit recevoir les messages du formulaire de contact
+   - `PORT` → laissé vide, Railway l'injecte automatiquement
+6. **Initialiser le schéma** sur la base MySQL de production : récupérer les identifiants de connexion externes du plugin MySQL (onglet *Connect*) et exécuter une fois, depuis un poste local :
+   ```bash
+   mysql -h <host> -P <port> -u <user> -p<password> --default-character-set=utf8mb4 <database> < database/schema.sql
+   mysql -h <host> -P <port> -u <user> -p<password> --default-character-set=utf8mb4 <database> < database/seed.sql
+   ```
+7. Railway détecte automatiquement un projet Node.js (via `package.json`) et exécute `npm install` puis `npm start`. Le déploiement se relance à chaque push sur `main`.
+
+### Fournisseur SMTP en production
+
+Le compte de test Ethereal utilisé en développement n'envoie pas de vrais emails. En production, un vrai fournisseur est nécessaire — par exemple [Brevo](https://www.brevo.com/) (ex-Sendinblue) ou [Mailtrap](https://mailtrap.io/) en mode transactionnel, tous deux avec une offre gratuite suffisante pour ce projet. Renseigner les identifiants SMTP fournis dans les variables `MAIL_*`.
+
 ## Organisation Git
 
 - `main` : version stable/livrable
