@@ -1,0 +1,13 @@
+<% if (typeof flash !== "undefined" && flash) { %>
+  <div class="message message-<%= flash.type %>"><%= flash.message %></div>
+<% } %>
+<% if (typeof erreurs !== "undefined" && erreurs && erreurs.length > 0) { %>
+  <ul class="message message-erreur">
+    <% erreurs.forEach(function(e) { %>
+      <li><%= e %></li>
+    <% }) %>
+  </ul>
+<% } %>
+<% if (typeof erreur !== "undefined" && erreur) { %>
+  <div class="message message-erreur"><%= erreur %></div>
+<% } %>
