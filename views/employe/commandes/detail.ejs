@@ -46,6 +46,10 @@
     <% } %>
 
     <% if (!["terminee", "annulee"].includes(commande.statut)) { %>
+      <p><a href="/employe/commandes/<%= commande.commande_id %>/modifier" class="bouton">Modifier la commande</a></p>
+    <% } %>
+
+    <% if (!["terminee", "annulee"].includes(commande.statut)) { %>
       <h2>Annuler la commande</h2>
       <p class="hint">L'annulation nécessite d'avoir contacté le client au préalable (appel ou email).</p>
       <form method="POST" action="/employe/commandes/<%= commande.commande_id %>/annuler" class="form">

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include("../../partials/head", { title: "Modifier la commande " + commande.numero_commande }) %>
+</head>
+<body>
+  <%- include("../../partials/header") %>
+  <main id="contenu-principal">
+    <h1>Modifier la commande <%= commande.numero_commande %></h1>
+    <p class="hint">Cette modification nécessite d'avoir contacté le client au préalable (appel ou email). Le menu ne peut pas être changé.</p>
+
+    <%- include("../../partials/messages", { erreurs: erreurs }) %>
+
+    <form method="POST" action="/employe/commandes/<%= commande.commande_id %>/modifier" class="form">
+      <label>Mode de contact
+        <select name="mode_contact" required>
+          <option value="">—</option>
+          <option value="téléphone" <%= commande.mode_contact === "téléphone" ? "selected" : "" %>>Téléphone</option>
+          <option value="email" <%= commande.mode_contact === "email" ? "selected" : "" %>>Email</option>
+        </select>
+      </label>
+      <label>Motif de la modification
+        <textarea name="motif" rows="3" required></textarea>
+      </label>
+
+      <label>Adresse de livraison
+        <input type="text" name="adresse_livraison" value="<%= commande.adresse_livraison %>" required>
+      </label>
+      <label>Ville
+        <input type="text" name="ville_livraison" value="<%= commande.ville_livraison %>" required>
+      </label>
+      <label>Code postal
+        <input type="text" name="code_postal_livraison" value="<%= commande.code_postal_livraison %>" required>
+      </label>
+      <label>Distance depuis Bordeaux (km, si hors Bordeaux)
+        <input type="number" name="distance_km" min="0" step="0.1" value="<%= commande.distance_km %>">
+      </label>
+      <label>Date de la prestation
+        <input type="date" name="date_prestation" value="<%= new Date(commande.date_prestation).toISOString().slice(0,10) %>" required>
+      </label>
+      <label>Heure de livraison souhaitée
+        <input type="time" name="heure_livraison" value="<%= commande.heure_livraison %>" required>
+      </label>
+      <label>Nombre de personnes
+        <input type="number" name="nombre_personne" min="<%= commande.nombre_personne_minimum %>" value="<%= commande.nombre_personne %>" required>
+      </label>
+      <button type="submit">Enregistrer les modifications</button>
+    </form>
+  </main>
+  <%- include("../../partials/footer") %>
+</body>
+</html>
