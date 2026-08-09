@@ -20,13 +20,14 @@ Le projet a été découpé en **lots fonctionnels indépendants**, chacun déve
 | 8 | Conformité | RGPD (consentement, politique de confidentialité, droit à l'effacement) et RGAA (lien d'évitement, focus visible) | `feature/rgpd-rgaa` |
 | 9 | Déploiement | Préparation production (sessions persistantes, cookies sécurisés) et documentation Railway | `feature/deploiement` |
 | 10 | Documentation | Documentation technique, manuel d'utilisation, charte graphique, gestion de projet | `feature/documentation` |
+| 11 | Corrections de conformité | Relecture du sujet point par point après la première version complète : ajout des infos client (nom/mail/prénom/GSM) sur le formulaire de commande, ajout de la modification de commande par l'employé (motif + mode de contact obligatoires) | `feature/corrections-conformite` |
 
 Chaque lot a suivi le même cycle : développement → tests fonctionnels manuels (formulaires, calculs de prix, transitions de statut, emails) → merge dans `develop` avec `--no-ff` (pour garder une trace explicite du merge dans l'historique) → suppression de la branche.
 
 ## Arbitrages et décisions notables
 
 - **MCD fourni incomplet pour certains besoins du cahier des charges** (pas de champ `nom` sur `utilisateur`, pas d'adresse de livraison sur `commande`, pas de galerie d'image, pas d'historique de statut) → complété et justifié dans la [documentation technique](documentation-technique.md#31-modèle-conceptuel-de-données-relationnel--mysql).
-- **Workflow des commandes employé** : le sujet indique qu'un employé ne peut « modifier/annuler » une commande sans avoir contacté le client. Interprétation retenue : l'avancement normal du statut (accepté → préparation → livraison → livré → terminé) ne nécessite pas de contact client (traitement interne), seule une **annulation** l'exige — avec saisie obligatoire du mode de contact et du motif.
+- **Workflow des commandes employé** : le sujet indique qu'un employé ne peut « modifier/annuler » une commande sans avoir contacté le client. Interprétation retenue : l'avancement normal du statut (accepté → préparation → livraison → livré → terminé) ne nécessite pas de contact client (traitement interne, ce n'est pas une modification du contenu de la commande) ; en revanche **modifier les détails** (adresse, date, nombre de personnes...) et **annuler** exigent tous les deux la saisie obligatoire du mode de contact et du motif.
 - **Pénalité de 600€ pour matériel non restitué** : la date limite (10 jours ouvrés) est calculée et un email d'alerte est envoyé automatiquement, mais la facturation effective de la pénalité reste un acte de gestion manuel (hors périmètre applicatif, pas de moyen de paiement intégré au projet).
 - **Bug d'encodage découvert en cours de développement** : les caractères accentués étaient corrompus en base à l'import des fichiers `.sql` sous Windows (client `mysql` interprétant mal l'UTF-8 sans le flag `--default-character-set=utf8mb4`). Diagnostiqué en comparant les octets stockés (`HEX()`) entre MySQL et l'application, puis corrigé.
 
