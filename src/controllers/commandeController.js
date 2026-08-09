@@ -50,7 +50,7 @@ async function nouvelleCommandeForm(req, res) {
   }
 
   const [rows] = await pool.query(
-    "SELECT adresse_postale, ville, pays FROM utilisateur WHERE utilisateur_id = ?",
+    "SELECT nom, prenom, email, telephone, adresse_postale, ville, pays FROM utilisateur WHERE utilisateur_id = ?",
     [req.session.user.id]
   );
   const profil = rows[0];
@@ -86,7 +86,7 @@ async function creerCommande(req, res) {
 
   if (erreurs.length > 0) {
     const [rows] = await pool.query(
-      "SELECT adresse_postale, ville, pays FROM utilisateur WHERE utilisateur_id = ?",
+      "SELECT nom, prenom, email, telephone, adresse_postale, ville, pays FROM utilisateur WHERE utilisateur_id = ?",
       [req.session.user.id]
     );
     return res.render("commandes/nouvelle", { menu, profil: rows[0], erreurs, valeurs: req.body });

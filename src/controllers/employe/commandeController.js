@@ -1,5 +1,6 @@
 const pool = require("../../config/mysql");
 const { sendMail } = require("../../utils/mailer");
+const { calculerPrix } = require("../commandeController");
 
 // Transition normale (avancement du traitement, aucun contact client requis)
 const TRANSITIONS = {
@@ -60,7 +61,8 @@ async function listerCommandes(req, res) {
 
 async function getCommandeComplete(commandeId) {
   const [rows] = await pool.query(
-    `SELECT c.*, m.titre AS menu_titre, u.nom, u.prenom, u.email, u.telephone
+    `SELECT c.*, m.titre AS menu_titre, m.nombre_personne_minimum, m.prix_par_personne,
+            u.nom, u.prenom, u.email, u.telephone
      FROM commande c
      JOIN menu m ON m.menu_id = c.menu_id
      JOIN utilisateur u ON u.utilisateur_id = c.utilisateur_id
@@ -187,4 +189,83 @@ async function annulerCommande(req, res) {
   res.redirect(`/employe/commandes/${commandeId}`);
 }
 
-module.exports = { listerCommandes, afficherCommande, changerStatut, annulerCommande };
+async function modifierCommandeForm(req, res) {
+  const commandeId = Number(req.params.id);
+  const commande = await getCommandeComplete(commandeId);
+  if (!commande) {
+    return res.status(404).render("erreur", { title: "Commande introuvable", message: "Cette commande n'existe pas." });
+  }
+
+  if (["terminee", "annulee"].includes(commande.statut)) {
+    req.session.flash = { type: "erreur", message: "Cette commande ne peut plus être modifiée." };
+    return res.redirect(`/employe/commandes/${commandeId}`);
+  }
+
+  res.render("employe/commandes/modifier", { commande, erreurs: [] });
+}
+
+async function modifierCommande(req, res) {
+  const commandeId = Number(req.params.id);
+  const commande = await getCommandeComplete(commandeId);
+  if (!commande) {
+    return res.status(404).render("erreur", { title: "Commande introuvable", message: "Cette commande n'existe pas." });
+  }
+
+  if (["terminee", "annulee"].includes(commande.statut)) {
+    req.session.flash = { type: "erreur", message: "Cette commande ne peut plus être modifiée." };
+    return res.redirect(`/employe/commandes/${commandeId}`);
+  }
+
+  const { mode_contact, motif, adresse_livraison, ville_livraison, code_postal_livraison, date_prestation, heure_livraison } = req.body;
+  const nombrePersonne = Number(req.body.nombre_personne);
+  const distanceKm = Number(req.body.distance_km) || 0;
+
+  const erreurs = [];
+  if (!mode_contact || !motif) {
+    erreurs.push("Le mode de contact et le motif sont obligatoires pour modifier une commande (le client doit avoir été contacté au préalable).");
+  }
+  if (!adresse_livraison || !ville_livraison || !code_postal_livraison) erreurs.push("L'adresse de livraison complète est obligatoire.");
+  if (!date_prestation) erreurs.push("La date de la prestation est obligatoire.");
+  if (!nombrePersonne || nombrePersonne < commande.nombre_personne_minimum) {
+    erreurs.push(`Ce menu nécessite au moins ${commande.nombre_personne_minimum} personnes.`);
+  }
+
+  if (erreurs.length > 0) {
+    return res.render("employe/commandes/modifier", { commande: { ...commande, ...req.body }, erreurs });
+  }
+
+  const { prixMenu, prixLivraison, reductionApplicable } = calculerPrix({
+    prixParPersonne: commande.prix_par_personne,
+    nombrePersonneMinimum: commande.nombre_personne_minimum,
+    nombrePersonne,
+    villeLivraison: ville_livraison,
+    distanceKm,
+  });
+
+  const motifComplet = `Modifiée par l'employé — contact : ${mode_contact}. Motif : ${motif}`;
+
+  await pool.query(
+    `UPDATE commande SET
+       adresse_livraison = ?, ville_livraison = ?, code_postal_livraison = ?, distance_km = ?,
+       date_prestation = ?, heure_livraison = ?, nombre_personne = ?,
+       prix_menu = ?, prix_livraison = ?, reduction_appliquee = ?, motif_derniere_modif = ?
+     WHERE commande_id = ?`,
+    [
+      adresse_livraison, ville_livraison, code_postal_livraison, distanceKm,
+      date_prestation, heure_livraison, nombrePersonne,
+      prixMenu, prixLivraison, reductionApplicable, motifComplet,
+      commandeId,
+    ]
+  );
+
+  await sendMail({
+    to: commande.email,
+    subject: `Mise à jour de ta commande ${commande.numero_commande}`,
+    html: `<p>Bonjour ${commande.prenom},</p><p>Ta commande a été modifiée suite à notre échange par ${mode_contact}.</p><p>Motif : ${motif}</p>`,
+  });
+
+  req.session.flash = { type: "succes", message: "Commande modifiée." };
+  res.redirect(`/employe/commandes/${commandeId}`);
+}
+
+module.exports = { listerCommandes, afficherCommande, changerStatut, annulerCommande, modifierCommandeForm, modifierCommande };

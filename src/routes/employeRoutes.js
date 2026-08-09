@@ -36,6 +36,8 @@ router.post("/horaires", horaireController.modifierHoraires);
 
 router.get("/commandes", commandeController.listerCommandes);
 router.get("/commandes/:id", commandeController.afficherCommande);
+router.get("/commandes/:id/modifier", commandeController.modifierCommandeForm);
+router.post("/commandes/:id/modifier", commandeController.modifierCommande);
 router.post("/commandes/:id/statut", commandeController.changerStatut);
 router.post("/commandes/:id/annuler", commandeController.annulerCommande);
 
